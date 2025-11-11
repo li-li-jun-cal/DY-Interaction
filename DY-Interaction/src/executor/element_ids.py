@@ -57,9 +57,20 @@ class DouyinElementIds:
     SHARE_BUTTON = 'com.ss.android.ugc.aweme:id/yv+'
     HOMEPAGE_USER_AVATAR = 'com.ss.android.ugc.aweme:id/bi='
 
+    # ========== 直播间元素 ==========
+    # 直播间检测和导航
+    LIVE_ROOM_INDICATOR = 'com.ss.android.ugc.aweme:id/syx'  # 直播间页面标识
+    LIVE_ROOM_ENTRANCE = 'com.ss.android.ugc.aweme:id/rkz'   # 直播间入口（点击进入直播间）
+    LIVE_ROOM_EXIT = 'com.ss.android.ugc.aweme:id/close_btn'  # 退出直播间按钮
+
+    # 直播间互动操作
+    LIVE_ROOM_COMMENT_BUTTON = 'com.ss.android.ugc.aweme:id/hn4'  # 评论按钮
+    LIVE_ROOM_COMMENT_INPUT = 'com.ss.android.ugc.aweme:id/hqk'   # 评论输入框
+    LIVE_ROOM_COMMENT_SEND = 'com.ss.android.ugc.aweme:id/34j'    # 评论发送按钮
+    LIVE_ROOM_LIKE_AREA = 'com.ss.android.ugc.aweme:id/j_q'       # 点赞区域（点击即点赞）
+    LIVE_ROOM_FOLLOW_BUTTON = 'com.ss.android.ugc.aweme:id/jp9'   # 关注按钮（文本："关注"）
+
     # ========== 特殊情况检测元素 ==========
-    LIVE_ROOM_INDICATOR = 'com.ss.android.ugc.aweme:id/syx'
-    LIVE_ROOM_EXIT = 'com.ss.android.ugc.aweme:id/close_btn'
     SPECIAL_PAGE_INDICATOR = 'com.ss.android.ugc.aweme:id:special_page'
 
     # ========== 系统和桌面检测 ==========
@@ -133,5 +144,22 @@ if __name__ == "__main__":
     print(f"  用户头像: {DouyinElementIds.USER_PAGE_AVATAR}")
     print(f"  用户名字: {DouyinElementIds.USER_PAGE_NAME}")
     print(f"  抖音号: {DouyinElementIds.USER_PAGE_DOUYIN_ID}")
+
+    print("\n【顶部Tab导航】")
+    print(f"  Tab共用ID: {DouyinElementIds.TOP_TAB_COMMON}")
+    print(f"  推荐: {DouyinElementIds.TAB_RECOMMEND}")
+    print(f"  关注: {DouyinElementIds.TAB_FOLLOW}")
+    print(f"  商城: {DouyinElementIds.TAB_MALL}")
+    print(f"  直播: {DouyinElementIds.TAB_LIVE}")
+    print(f"  团购: {DouyinElementIds.TAB_GROUP_BUY}")
+
+    print("\n【直播间操作】")
+    print(f"  直播间入口: {DouyinElementIds.LIVE_ROOM_ENTRANCE}")
+    print(f"  评论按钮: {DouyinElementIds.LIVE_ROOM_COMMENT_BUTTON}")
+    print(f"  评论输入框: {DouyinElementIds.LIVE_ROOM_COMMENT_INPUT}")
+    print(f"  评论发送: {DouyinElementIds.LIVE_ROOM_COMMENT_SEND}")
+    print(f"  点赞区域: {DouyinElementIds.LIVE_ROOM_LIKE_AREA}")
+    print(f"  关注按钮: {DouyinElementIds.LIVE_ROOM_FOLLOW_BUTTON}")
+    print(f"  退出直播间: {DouyinElementIds.LIVE_ROOM_EXIT}")
 
     print("=" * 80 + "\n")
