@@ -1,0 +1,89 @@
+DY-Interaction 项目 - 严重安全问题总结
+
+1. API密钥和Cookie硬编码暴露
+========================================
+位置: config/config.json, scripts/update_server_cookie.py
+问题: 明文存储敏感信息，可能泄露到Git历史记录
+严重程度: CRITICAL
+修复建议:
+  - 使用环境变量存储API密钥和Cookie
+  - 创建.env.example作为模板
+  - 更新.gitignore防止敏感文件提交
+  - 检查Git历史记录是否存在泄露: 
+    git log --all --full-history -- config/config.json
+
+2. 数据库会话资源泄漏
+========================================
+位置: 20+个文件（爬虫、调度器、执行器）
+问题: session.close()虽然在finally中，但未使用context manager，容易出错
+严重程度: CRITICAL
+修复建议:
+  - 为DatabaseManager添加context manager支持
+  - 将所有session = db.get_session()改为with db.get_session() as session:
+  - 实现自动commit/rollback逻辑
+
+3. 设备锁竞态条件
+========================================
+位置: src/utils/device_manager.py
+问题: 多进程同时修改device_locks.json无原子操作，导致设备被重复占用
+严重程度: CRITICAL
+修复建议:
+  - 实现文件锁(fcntl)或Redis分布式锁
+  - 使用临时文件+原子替换(os.replace)确保原子性
+  - Windows系统使用msvcrt.locking
+
+4. 并发写入数据库
+========================================
+位置: SQLite数据库配置
+问题: SQLite在高并发写入时会阻塞，未配置连接池
+严重程度: HIGH
+修复建议:
+  - 配置SQLAlchemy连接池 (pool_size, max_overflow)
+  - 设置SQLite timeout: connect_args={'timeout': 10}
+  - 生产环境考虑迁移到MySQL/PostgreSQL
+
+5. API调用无限流限制
+========================================
+位置: src/crawler/api_client.py
+问题: 请求频率无限制，可能导致IP被服务商封禁
+严重程度: HIGH
+修复建议:
+  - 实现全局RateLimiter
+  - 限制请求频率(requests_per_second)
+  - 增加突发流量处理(burst_size)
+
+6. 错误处理过于宽泛
+========================================
+位置: 多个API和爬虫文件
+问题: except Exception:隐藏真实错误，无法区分可重试和不可重试
+严重程度: HIGH
+修复建议:
+  - 分离异常类型(Timeout, ConnectionError, HTTPError等)
+  - 为不同异常实现不同的重试策略
+  - 记录完整的异常堆栈信息
+
+7. 输入验证不足
+========================================
+位置: main_menu.py, 交互式脚本
+问题: 用户输入未进行格式检查和长度限制
+严重程度: MEDIUM
+修复建议:
+  - 实现输入验证函数(validate_account_id, validate_sec_uid)
+  - 检查字符串长度上限(不超过255)
+  - 使用正则表达式验证格式
+
+8. 设备ID映射可能出错
+========================================
+位置: src/executor/interaction_executor.py
+问题: 基于adb devices输出顺序的假设，热插拔时会映射错误
+严重程度: HIGH
+修复建议:
+  - 实现持久化的设备映射表
+  - 使用设备序列号作为主键
+  - 热插拔时更新映射关系
+
+修复优先级:
+============
+P0 (今天): 1, 2, 3 - 安全和稳定性
+P1 (本周): 4, 5, 6, 7, 8 - 功能完善
+P2 (本月): 其他质量问题 - 性能优化

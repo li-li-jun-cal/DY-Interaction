@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  # Crawler Service - 爬虫服务
+  crawler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dy-crawler
+    command: python programs/run_crawler.py monitor --all
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./config:/app/config:ro
+    environment:
+      - LOGLEVEL=INFO
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - dy-network
+
+  # Realtime Automation Service - 实时自动化服务
+  automation-realtime:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dy-automation-realtime
+    command: python programs/run_automation.py realtime --all
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./config:/app/config:ro
+    environment:
+      - LOGLEVEL=INFO
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - dy-network
+    depends_on:
+      - crawler
+
+  # Longterm Automation Service - 长期自动化服务
+  automation-longterm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dy-automation-longterm
+    command: python programs/run_automation.py longterm --all
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./config:/app/config:ro
+    environment:
+      - LOGLEVEL=INFO
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - dy-network
+    depends_on:
+      - crawler
+
+  # Maintenance Service - 养号服务 (可选)
+  automation-maintenance:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dy-automation-maintenance
+    command: python programs/run_automation.py maintenance --devices 1
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./config:/app/config:ro
+    environment:
+      - LOGLEVEL=INFO
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - dy-network
+    profiles:
+      - maintenance  # Optional service, start with: docker-compose --profile maintenance up
+
+networks:
+  dy-network:
+    driver: bridge
+
+volumes:
+  data:
+    driver: local
+  logs:
+    driver: local

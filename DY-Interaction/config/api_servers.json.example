@@ -1,0 +1,57 @@
+{
+  "_comment": "API 服务器池配置示例 - 支持多服务器并发爬取",
+  "_usage": "复制此文件为 api_servers.json 并填写实际配置",
+
+  "primary_servers": [
+    {
+      "name": "server1",
+      "url": "http://127.0.0.1:8888",
+      "cookie": "your_cookie_1_here",
+      "concurrency_limit": 3,
+      "_comment": "主服务器1 - 单服务器可同时处理3个账号"
+    },
+    {
+      "name": "server2",
+      "url": "http://127.0.0.1:8889",
+      "cookie": "your_cookie_2_here",
+      "concurrency_limit": 3,
+      "_comment": "主服务器2 - 单服务器可同时处理3个账号"
+    },
+    {
+      "name": "server3",
+      "url": "http://192.168.1.100:8888",
+      "cookie": "your_cookie_3_here",
+      "concurrency_limit": 2,
+      "_comment": "主服务器3 - 单服务器可同时处理2个账号"
+    },
+    {
+      "name": "server4",
+      "url": "http://192.168.1.101:8888",
+      "cookie": "your_cookie_4_here",
+      "concurrency_limit": 2,
+      "_comment": "主服务器4 - 单服务器可同时处理2个账号"
+    }
+  ],
+
+  "backup_servers": [
+    {
+      "name": "backup1",
+      "url": "http://192.168.1.200:8888",
+      "cookie": "your_backup_cookie_here",
+      "concurrency_limit": 1,
+      "_comment": "备用服务器 - 主服务器全忙时自动启用"
+    }
+  ],
+
+  "_total_capacity_comment": "总并发容量 = 3+3+2+2 = 10个账号同时爬取",
+  "_server_health_comment": "服务器健康检查：连续失败3次自动标记为故障",
+  "_load_balance_comment": "负载均衡：自动选择负载最小的健康服务器",
+
+  "_configuration_tips": {
+    "concurrency_limit": "根据API服务器性能调整，建议1-5",
+    "cookie_update": "定期更新cookie以保持有效性",
+    "server_count": "建议至少2个主服务器 + 1个备用服务器",
+    "network": "确保所有服务器网络可达",
+    "test": "使用 python -m src.crawler.server_pool 测试配置"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "devices": {
+    "auto_detect": true,
+    "description": "自动检测并使用所有已连接的USB设备"
+  },
+  "task_deduplication": {
+    "max_follow_devices": 3,
+    "description": "允许多少台不同设备关注同一用户（设置为0表示不限制）"
+  },
+  "api": {
+    "servers": [
+      {
+        "name": "主力服务器1",
+        "base_url": "http://149.88.66.146:8008",
+        "priority": 1,
+        "api_key": ""
+      },
+      {
+        "name": "主力服务器2",
+        "base_url": "http://140.245.55.143:8008",
+        "priority": 2,
+        "api_key": ""
+      },
+      {
+        "name": "主力服务3",
+        "base_url": "http://140.245.55.143:20002",
+        "priority": 3,
+        "api_key": ""
+      },
+      {
+        "name": "http://38.55.134.72:8008",
+        "base_url": "http://38.55.134.72:8008",
+        "priority": 4,
+        "api_key": ""
+      }
+    ],
+    "fallback": {
+      "base_url": "https://api.tikhub.dev",
+      "api_key": "k7RdL8Up0nG7t0+3DICQ+RP1bAKoVrlI5yfhgWzQWLmBmWONN2LZLxWjPw=="
+    },
+    "timeout": 30,
+    "max_retries": 3,
+    "request_delay": 0.5
+  }
+}

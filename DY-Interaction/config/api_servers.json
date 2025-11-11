@@ -1,0 +1,12 @@
+{
+  "primary_servers": [
+    {
+      "name": "server1",
+      "url": "http://127.0.0.1:8888",
+      "cookie": "your_cookie_here",
+      "concurrency_limit": 4,
+      "_comment": "单服务器同时处理4个账号（根据服务器性能调整）"
+    }
+  ],
+  "backup_servers": []
+}
