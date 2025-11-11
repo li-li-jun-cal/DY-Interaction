@@ -117,8 +117,10 @@ def show_menu():
     print("📋 功能菜单:")
     print()
     print("  【爬虫管理】")
-    print("    1. 启动全量爬虫 (爬取历史评论)")
-    print("    2. 启动监控爬虫 (监控新增评论)")
+    print("    1. 启动全量爬虫 (爬取历史评论，可选择账号)")
+    print("       └─ 默认跳过已爬取账号 | 支持: 全部(0) 新账号(n) 单选(1) 多选(1,3,5)")
+    print("    2. 启动监控爬虫 (监控新增评论，可选择账号)")
+    print("       └─ 可选择: 全部(0) 单选(1) 多选(1,3,5)")
     print()
     print("  【自动化任务】")
     print("    3. 启动实时自动化 (处理新增评论)")
@@ -596,17 +598,17 @@ def main():
             break
 
         elif choice == '1':
-            # 全量爬虫 (使用统一爬虫服务)
+            # 全量爬虫 - 交互式账号选择
             run_command(
-                f"{sys.executable} programs/run_crawler.py history --all",
-                "全量爬虫 - 爬取历史评论"
+                f"{sys.executable} programs/run_crawler.py history --interactive",
+                "全量爬虫 - 爬取历史评论（交互式选择账号）"
             )
 
         elif choice == '2':
-            # 监控爬虫 (使用统一爬虫服务)
+            # 监控爬虫 - 交互式账号选择
             run_command(
-                f"{sys.executable} programs/run_crawler.py monitor --all",
-                "监控爬虫 - 监控新增评论"
+                f"{sys.executable} programs/run_crawler.py monitor --interactive",
+                "监控爬虫 - 监控新增评论（交互式选择账号）"
             )
 
         elif choice == '3':
