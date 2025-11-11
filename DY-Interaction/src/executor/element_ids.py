@@ -39,6 +39,18 @@ class DouyinElementIds:
     BOTTOM_NAV_COMMON = 'com.ss.android.ugc.aweme:id/4ba'  # 底部导航通用容器
     FRAGMENT_CONTAINER = 'com.ss.android.ugc.aweme:id/fragment_container'
 
+    # ========== 顶部Tab导航（共用同一个ID，需通过text区分）==========
+    # 注意：这些Tab共用 resourceId: com.ss.android.ugc.aweme:id/4ba
+    # 使用方式：d(resourceId=TOP_TAB_COMMON, text=TAB_RECOMMEND).click()
+    TOP_TAB_COMMON = 'com.ss.android.ugc.aweme:id/4ba'  # 顶部Tab共用ID
+
+    # Tab名称常量（从右到左顺序：推荐、关注、商城、直播、团购）
+    TAB_RECOMMEND = "推荐"      # 首页推荐流
+    TAB_FOLLOW = "关注"         # 关注的用户动态
+    TAB_MALL = "商城"           # 抖音商城
+    TAB_LIVE = "直播"           # 直播间入口
+    TAB_GROUP_BUY = "团购"      # 团购活动
+
     # ========== 首页视频流元素（最重要）==========
     LIKE_BUTTON = 'com.ss.android.ugc.aweme:id/gas'  # 点赞按钮 - 用于检测是否在首页
     COLLECT_BUTTON = 'com.ss.android.ugc.aweme:id/d-z'
