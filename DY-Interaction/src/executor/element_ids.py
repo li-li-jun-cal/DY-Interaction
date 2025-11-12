@@ -9,10 +9,11 @@ class DouyinElementIds:
     """
 
     # ========== 搜索流程元素 ==========
-    SEARCH_BUTTON = 'com.ss.android.ugc.aweme:id/1r2'
-    SEARCH_INPUT = 'com.ss.android.ugc.aweme:id/et_search_kw'
-    SEARCH_CONFIRM = 'com.ss.android.ugc.aweme:id/33a'
-    SEARCH_RESULT_TEXT_ELEMENT = 'android:id/text1'
+    # 注意：这些搜索元素适用于多个场景（首页搜索、商城搜索、团购搜索）
+    SEARCH_BUTTON = 'com.ss.android.ugc.aweme:id/1r2'           # 搜索按钮
+    SEARCH_INPUT = 'com.ss.android.ugc.aweme:id/et_search_kw'   # 搜索输入框（通用）
+    SEARCH_CONFIRM = 'com.ss.android.ugc.aweme:id/33a'          # 搜索确认按钮（通用）
+    SEARCH_RESULT_TEXT_ELEMENT = 'android:id/text1'             # 搜索结果文本元素
 
     # ========== 评论流程元素 ==========
     COMMENT_BUTTON = 'com.ss.android.ugc.aweme:id/eex'
@@ -69,6 +70,16 @@ class DouyinElementIds:
     LIVE_ROOM_COMMENT_SEND = 'com.ss.android.ugc.aweme:id/34j'    # 评论发送按钮
     LIVE_ROOM_LIKE_AREA = 'com.ss.android.ugc.aweme:id/j_q'       # 点赞区域（点击即点赞）
     LIVE_ROOM_FOLLOW_BUTTON = 'com.ss.android.ugc.aweme:id/jp9'   # 关注按钮（文本："关注"）
+
+    # ========== 商城和团购元素 ==========
+    # 注意：商城和团购的商品卡片没有固定ID，需通过滑动(swipe)浏览
+    # 搜索功能：复用 SEARCH_INPUT 和 SEARCH_CONFIRM 元素
+    # 使用方式：
+    #   1. 切换到商城/团购Tab: d(resourceId=TOP_TAB_COMMON, text=TAB_MALL).click()
+    #   2. 点击搜索输入框: d(resourceId=SEARCH_INPUT).click()
+    #   3. 输入搜索内容: d(resourceId=SEARCH_INPUT).set_text("商品名")
+    #   4. 点击搜索: d(resourceId=SEARCH_CONFIRM).click()
+    #   5. 浏览商品: d.swipe(start_x, start_y, end_x, end_y, duration)
 
     # ========== 特殊情况检测元素 ==========
     SPECIAL_PAGE_INDICATOR = 'com.ss.android.ugc.aweme:id:special_page'
